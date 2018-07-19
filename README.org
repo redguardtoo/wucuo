@@ -1,0 +1,39 @@
+* wucuo (v0.0.2)
+Spell check code containing camel case words.
+
+- Support aspell AND hunspell
+- Works out of box. Forget "--run-together" option of aspell
+- Users have freedom to customize where to spell check and which dictionary to use
+* Install
+wucuo is already uploaded to [[http://melpa.org]]. The best way to install is Emacs package manager.
+* Setup
+Please install either aspell or hunspell and corresponding dictionaries at first.
+
+* Usage
+Just run =M-x wucuo-start=. It will setup and start =flyspell-mode=.
+* Tips
+** Change dictionaries
+See =wucuo-aspell-language-to-use= and =wucuo-hunspell-dictionary-base-name=
+** Only check words using certain font faces
+#+begin_src elisp
+(setq wucuo-personal-font-faces-to-check '(font-lock-comment-face))
+#+end_src
+** Flyspell wrongly mark some word as typo
+Please chose from following three solutions.
+*** Emacs Lisp setup
+#+begin_src javascript
+(defun my-checker (word)
+  "If WORD is typo, return t."
+  t)
+(setq wucuo-extra-predicate #'my-checker)
+#+end_src
+*** Create personal dictionary for aspell
+Run =M-x wucuo-create-aspell-personal-dictionary=
+*** Create personal dictionary for hunspell
+Run =M-x wucuo-create-hunspell-personal-dictionary=
+** Speed up checking if aspell is used
+#+begin_src elisp
+(setq ispell-extra-args "--run-together")
+#+end_src
+* Contact me
+Report bug at [[https://github.com/redguardtoo/wucuo]].
