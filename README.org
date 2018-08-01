@@ -19,7 +19,7 @@ See =wucuo-aspell-language-to-use= and =wucuo-hunspell-dictionary-base-name=
 (setq wucuo-personal-font-faces-to-check '(font-lock-comment-face))
 #+end_src
 ** Flyspell wrongly mark some word as typo
-Please chose from following three solutions.
+There are three solutions.
 *** Emacs Lisp setup
 #+begin_src javascript
 (defun my-checker (word)
