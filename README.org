@@ -1,4 +1,4 @@
-* wucuo (v0.0.2)
+* wucuo (v0.0.3)
 Spell check code containing camel case words.
 
 - Support aspell AND hunspell

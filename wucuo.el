@@ -2,7 +2,7 @@
 
 ;; Copyright (C) 2018 Chen Bin
 ;;
-;; Version: 0.0.2
+;; Version: 0.0.3
 ;; Keywords: convenience
 ;; Author: Chen Bin <chenbin DOT sh AT gmail DOT com>
 ;; URL: http://github.com/redguardtoo/wucuo
@@ -67,6 +67,7 @@
 (defcustom wucuo-font-faces-to-check
   '(font-lock-string-face
     font-lock-doc-face
+    font-lock-comment-face
     font-lock-builtin-face
     font-lock-function-name-face
     font-lock-variable-name-face
@@ -87,7 +88,7 @@
   :group 'wucuo)
 
 (defcustom wucuo-personal-font-faces-to-check
-  '(font-lock-comment-face)
+  nil
   "Similar to `wucuo-font-faces-to-check'.
 Define personal font faces to check."
   :type '(repeat sexp)
