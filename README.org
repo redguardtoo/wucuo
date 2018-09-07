@@ -11,6 +11,10 @@ Please install either aspell or hunspell and corresponding dictionaries at first
 
 * Usage
 Just run =M-x wucuo-start=. It will setup and start =flyspell-mode=.
+
+Please note =flyspell-prog-mode= should not be enabled when using "wucuo".
+
+=flyspell-prog-mode= could be replaced by "wucuo".
 * Tips
 ** Change dictionaries
 See =wucuo-aspell-language-to-use= and =wucuo-hunspell-dictionary-base-name=
