@@ -1,4 +1,4 @@
-* wucuo (v0.0.4)
+* wucuo (v0.0.5)
 Spell check code containing camel case words.
 
 - Support aspell AND hunspell
@@ -12,14 +12,14 @@ Please install either aspell or hunspell and corresponding dictionaries at first
 * Usage
 Run =M-x wucuo-start=. It will setup and start =flyspell-mode=.
 
-Or add below line into =.emacs=,
+Or add below code into =~/.emacs= to enable =wucuo= for all programming languages,
 #+begin_src elisp
-(wucuo-start)
+(defun prog-mode-hook-setup ()
+  (wucuo-start))
+(add-hook 'prog-mode-hook 'prog-mode-hook-setup)
 #+end_src
 
-Please note =flyspell-prog-mode= should not be enabled when using "wucuo".
-
-=flyspell-prog-mode= could be replaced by "wucuo".
+Please note =flyspell-prog-mode= should not be enabled when using =wucuo=. It should be replaced by =wucuo=.
 * Tips
 ** Change dictionaries
 See =wucuo-aspell-language-to-use= and =wucuo-hunspell-dictionary-base-name=
