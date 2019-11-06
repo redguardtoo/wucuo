@@ -1,4 +1,4 @@
-* wucuo (v0.0.5)
+* wucuo (v0.0.6)
 Spell check code containing camel case words.
 
 - Support aspell AND hunspell
@@ -15,11 +15,15 @@ Run =M-x wucuo-start=. It will setup and start =flyspell-mode=.
 Or add below code into =~/.emacs= to enable =wucuo= for all programming languages,
 #+begin_src elisp
 (defun prog-mode-hook-setup ()
-  (wucuo-start))
+  (wucuo-start t))
 (add-hook 'prog-mode-hook 'prog-mode-hook-setup)
 #+end_src
 
 Please note =flyspell-prog-mode= should not be enabled when using =wucuo=. It should be replaced by =wucuo=.
+
+Some major modes configure and start flyspell by themselves. Their per mode flyspell configuration should be replaced by wucuo too.
+
+See the "Tips" or just contact me for the solution.
 * Tips
 ** Change dictionaries
 See =wucuo-aspell-language-to-use= and =wucuo-hunspell-dictionary-base-name=
@@ -43,6 +47,20 @@ Run =M-x wucuo-create-hunspell-personal-dictionary=
 ** Speed up checking if aspell is used
 #+begin_src elisp
 (setq ispell-extra-args "--run-together")
+#+end_src
+** If the major mode has its own flyspell configuration
+I've not found any better solution than my program.
+
+So I strongly recommend using wucuo to replace default flyspell configuration of any major mode,
+#+begin_src elisp
+(wucuo-setup-major-mode "typescript-mode")
+#+end_src
+
+Or if you need replace the default configuration of multiple major modes, you can use below code, 
+#+begin_src elisp
+(setq wucuo-major-modes-to-setup-by-force
+      '("typescript-mode" "emacs-lisp-mode"))
+(wucuo-start t)
 #+end_src
 * Contact me
 Report bug at [[https://github.com/redguardtoo/wucuo]].
