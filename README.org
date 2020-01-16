@@ -1,8 +1,12 @@
-* wucuo (v0.0.6)
+* wucuo (v0.0.7)
+
+[[http://melpa.org/#/wucuo][file:http://melpa.org/packages/wucuo-badge.svg]]
+[[http://stable.melpa.org/#/wucuo][file:http://stable.melpa.org/packages/wucuo-badge.svg]]
+
 Spell check code containing camel case words.
 
-- Support aspell AND hunspell
-- Works out of box. Forget "--run-together" option of aspell
+- Support both aspell and hunspell
+- Works out of box. Aspell's "--run-together" is optional
 - Users have freedom to customize where to spell check and which dictionary to use
 * Install
 wucuo is already uploaded to [[http://melpa.org]]. The best way to install is Emacs package manager.
