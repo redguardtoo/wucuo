@@ -1,4 +1,4 @@
-* wucuo (v0.0.7)
+* wucuo (v0.0.8)
 
 [[http://melpa.org/#/wucuo][file:http://melpa.org/packages/wucuo-badge.svg]]
 [[http://stable.melpa.org/#/wucuo][file:http://stable.melpa.org/packages/wucuo-badge.svg]]

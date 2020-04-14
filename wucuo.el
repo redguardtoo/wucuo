@@ -2,7 +2,7 @@
 
 ;; Copyright (C) 2018 Chen Bin
 ;;
-;; Version: 0.0.7
+;; Version: 0.0.8
 ;; Keywords: convenience
 ;; Author: Chen Bin <chenbin DOT sh AT gmail DOT com>
 ;; URL: http://github.com/redguardtoo/wucuo
@@ -305,16 +305,15 @@ property of the major mode name."
 ;;;###autoload
 (defun wucuo-version ()
   "Output version."
-  (message "0.0.7"))
+  (message "0.0.8"))
 
 ;;;###autoload
 (defun wucuo-setup-major-mode (mode)
   "Set up MODE's flyspell predicate."
   (if (stringp mode) (setq mode (symobol mode)))
-  (with-eval-after-load mode
-    (put mode
-         'flyspell-mode-predicate
-         'wucuo-generic-check-word-predicate)))
+  (put mode
+       'flyspell-mode-predicate
+       'wucuo-generic-check-word-predicate))
 
 ;;;###autoload
 (defun wucuo-start (&optional force)
