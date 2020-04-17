@@ -1,4 +1,4 @@
-* wucuo (v0.0.8)
+* wucuo
 
 [[http://melpa.org/#/wucuo][file:http://melpa.org/packages/wucuo-badge.svg]]
 [[http://stable.melpa.org/#/wucuo][file:http://stable.melpa.org/packages/wucuo-badge.svg]]
@@ -22,6 +22,8 @@ Or add below code into =~/.emacs= to enable =wucuo= for all programming language
   (wucuo-start t))
 (add-hook 'prog-mode-hook 'prog-mode-hook-setup)
 #+end_src
+
+The =flyspell-mode= is turned on by =wucuo-start= by default. See =wucuo-flyspell-start-mode= for other options.
 
 Please note =flyspell-prog-mode= should not be enabled when using =wucuo=. It should be replaced by =wucuo=.
 
