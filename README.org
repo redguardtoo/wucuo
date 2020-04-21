@@ -31,6 +31,12 @@ Some major modes configure and start flyspell by themselves. Their per mode flys
 
 See the "Tips" or just contact me for the solution.
 * Tips
+** Running flyspell in light mode
+If =wucuo-flyspell-start-mode= is "lite", =wucuo-start= calls =flyspell-buffer= periodically.
+
+The interval of buffer checking is controlled by =wucuo-update-interval=.
+
+It's more light weight than running =flyspell-mode=.
 ** Change dictionaries
 See =wucuo-aspell-language-to-use= and =wucuo-hunspell-dictionary-base-name=
 ** Only check words using certain font faces
