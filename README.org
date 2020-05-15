@@ -74,5 +74,9 @@ Or if you need replace the default configuration of multiple major modes, you ca
       '("typescript-mode" "emacs-lisp-mode"))
 (wucuo-start t)
 #+end_src
+** spell check current buffer
+Instead of enabling =flyspell-mode= to check the word when inputting, you can use =wucuo-spell-check-buffer= to spell check current buffer.
+
+It uses =wucuo-update-interval=, =wucuo-spell-check-buffer-max=, and =wucuo-spell-check-buffer-predicate= to ensure buffer checking happen less frequently.
 * Contact me
 Report bug at [[https://github.com/redguardtoo/wucuo]].
