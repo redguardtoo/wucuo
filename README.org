@@ -34,9 +34,11 @@ See the "Tips" or just contact me for the solution.
 ** Running flyspell in light mode
 If =wucuo-flyspell-start-mode= is "lite", =wucuo-start= calls =flyspell-buffer= periodically.
 
-The interval of buffer checking is controlled by =wucuo-update-interval=.
+If =wucuo-flyspell-start-mode= is "ultra", =wucuo-start= calls =flyspell-region= to check visible region in current window periodically.
 
-It's more light weight than running =flyspell-mode=.
+The interval of buffer checking or region checking is controlled by =wucuo-update-interval=.
+
+Checking buffer or region only is more efficient than =flyspell-mode=.
 ** Change dictionaries
 See =wucuo-aspell-language-to-use= and =wucuo-hunspell-dictionary-base-name=
 ** Only check words using certain font faces
