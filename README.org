@@ -9,6 +9,11 @@ Fastest solution to spell check camel case code or plain text
 - Works out of box
 - Support both aspell and hunspell
 - Powerful and easy to set up
+
+Screenshot:
+
+[[file:demo.png]]
+
 * Install
 wucuo is already uploaded to [[http://melpa.org]]. The best way to install is Emacs package manager.
 * Setup
