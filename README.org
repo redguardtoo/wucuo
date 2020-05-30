@@ -3,45 +3,41 @@
 [[http://melpa.org/#/wucuo][file:http://melpa.org/packages/wucuo-badge.svg]]
 [[http://stable.melpa.org/#/wucuo][file:http://stable.melpa.org/packages/wucuo-badge.svg]]
 
-Spell check code containing camel case words.
+Fastest solution to spell check camel case code or plain text
 
+- Fast
+- Works out of box
 - Support both aspell and hunspell
-- Works out of box. Aspell's "--run-together" is optional
-- Users have freedom to customize where to spell check and which dictionary to use
+- Powerful and easy to set up
 * Install
 wucuo is already uploaded to [[http://melpa.org]]. The best way to install is Emacs package manager.
 * Setup
 Please install either aspell or hunspell and corresponding dictionaries at first.
 
 * Usage
-Run =M-x wucuo-start=. It will setup and start =flyspell-mode=.
-
-Or add below code into =~/.emacs= to enable =wucuo= for all programming languages,
+Or add below code into =~/.emacs= to enable =wucuo=,
 #+begin_src elisp
-(defun prog-mode-hook-setup ()
-  (wucuo-start t))
-(add-hook 'prog-mode-hook 'prog-mode-hook-setup)
+(add-hook 'prog-mode-hook #'wucuo-start)
+(add-hook 'text-mode-hook #'wucuo-start)
 #+end_src
 
-The =flyspell-mode= is turned on by =wucuo-start= by default. See =wucuo-flyspell-start-mode= for other options.
+Please note =wucuo= is a complete solution. You should not turn on =flyspell-prog-mode= or =flyspell-mode= when using wucuo.
 
-Please note =flyspell-prog-mode= should not be enabled when using =wucuo=. It should be replaced by =wucuo=.
-
-Some major modes configure and start flyspell by themselves. Their per mode flyspell configuration should be replaced by wucuo too.
-
-See the "Tips" or just contact me for the solution.
+See =wucuo-check-nil-font-face= on how to check plain text (text without font).
 * Tips
-** Running flyspell in light mode
-If =wucuo-flyspell-start-mode= is "lite", =wucuo-start= calls =flyspell-buffer= periodically.
+** Change start mode
+The default value of =wucuo-flyspell-start-mode= is "ultra".
 
 If =wucuo-flyspell-start-mode= is "ultra", =wucuo-start= calls =flyspell-region= to check visible region in current window periodically.
+
+If =wucuo-flyspell-start-mode= is "lite", =wucuo-start= calls =flyspell-buffer= periodically.
 
 The interval of buffer checking or region checking is controlled by =wucuo-update-interval=.
 
 Checking buffer or region only is more efficient than =flyspell-mode=.
 ** Change dictionaries
 See =wucuo-aspell-language-to-use= and =wucuo-hunspell-dictionary-base-name=
-** Only check words using certain font faces
+** Only check words with specified font faces
 #+begin_src elisp
 (setq wucuo-personal-font-faces-to-check '(font-lock-comment-face))
 #+end_src
@@ -62,23 +58,10 @@ Run =M-x wucuo-create-hunspell-personal-dictionary=
 #+begin_src elisp
 (setq ispell-extra-args "--run-together")
 #+end_src
-** If the major mode has its own flyspell configuration
-I've not found any better solution than my program.
-
-So I strongly recommend using wucuo to replace default flyspell configuration of any major mode,
-#+begin_src elisp
-(wucuo-setup-major-mode "typescript-mode")
-#+end_src
-
+** Ignore major mode's own flyspell predicate
 Or if you need replace the default configuration of multiple major modes, you can use below code, 
 #+begin_src elisp
-(setq wucuo-major-modes-to-setup-by-force
-      '("typescript-mode" "emacs-lisp-mode"))
-(wucuo-start t)
+(setq wucuo-modes-whose-predicate-ignored '("typescript-mode"))
 #+end_src
-** spell check current buffer
-Instead of enabling =flyspell-mode= to check the word when inputting, you can use =wucuo-spell-check-buffer= to spell check current buffer.
-
-It uses =wucuo-update-interval=, =wucuo-spell-check-buffer-max=, and =wucuo-spell-check-buffer-predicate= to ensure buffer checking happen less frequently.
 * Contact me
 Report bug at [[https://github.com/redguardtoo/wucuo]].
