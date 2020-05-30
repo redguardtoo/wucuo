@@ -26,11 +26,11 @@ Please note =wucuo= is a complete solution. You should not turn on =flyspell-pro
 See =wucuo-check-nil-font-face= on how to check plain text (text without font).
 * Tips
 ** Change start mode
-The default value of =wucuo-flyspell-start-mode= is "ultra".
+The default value of =wucuo-flyspell-start-mode= is "fast".
 
-If =wucuo-flyspell-start-mode= is "ultra", =wucuo-start= calls =flyspell-region= to check visible region in current window periodically.
+If =wucuo-flyspell-start-mode= is "fast", =wucuo-start= calls =flyspell-region= to check visible region in current window periodically.
 
-If =wucuo-flyspell-start-mode= is "lite", =wucuo-start= calls =flyspell-buffer= periodically.
+If =wucuo-flyspell-start-mode= is "normal", =wucuo-start= calls =flyspell-buffer= periodically.
 
 The interval of buffer checking or region checking is controlled by =wucuo-update-interval=.
 
