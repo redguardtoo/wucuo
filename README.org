@@ -1,4 +1,5 @@
 * wucuo
+[[file:wucuo.png]]
 
 [[http://melpa.org/#/wucuo][file:http://melpa.org/packages/wucuo-badge.svg]]
 [[http://stable.melpa.org/#/wucuo][file:http://stable.melpa.org/packages/wucuo-badge.svg]]
