@@ -6,7 +6,7 @@
 ;; Keywords: convenience
 ;; Author: Chen Bin <chenbin DOT sh AT gmail DOT com>
 ;; URL: http://github.com/redguardtoo/wucuo
-;; Package-Requires: ((emacs "24.4"))
+;; Package-Requires: ((emacs "25.1"))
 
 ;; This file is not part of GNU Emacs.
 
@@ -281,8 +281,9 @@ Ported from 'https://github.com/fatih/camelcase/blob/master/camelcase.go'."
 (defun wucuo-generic-check-word-predicate ()
   "Function providing per-mode customization over which words are spell checked.
 Returns t to continue checking, nil otherwise."
-  ;; Emacs 24 uses `font-lock-fontify-buffer'.
-  (font-lock-fontify-buffer)
+
+  ;; Emacs 25 used `font-lock-ensure'
+  (font-lock-ensure)
 
   (let* ((case-fold-search nil)
          (pos (- (point) 1))
