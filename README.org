@@ -27,7 +27,9 @@ Or add below code into =~/.emacs= to enable =wucuo=,
 (add-hook 'text-mode-hook #'wucuo-start)
 #+end_src
 
-Please note =wucuo= is a complete solution. You should not turn on =flyspell-prog-mode= or =flyspell-mode= when using wucuo.
+The spell checking starts when current buffer is saved.
+
+Please note =wucuo= is a complete solution. You should turn off =flyspell-prog-mode= and =flyspell-mode= before using this program.
 
 See =wucuo-check-nil-font-face= on how to check plain text (text without font).
 * Tips
