@@ -33,7 +33,7 @@ Please note =wucuo= is a complete solution. You should turn off =flyspell-prog-m
 
 See =wucuo-check-nil-font-face= on how to check plain text (text without font).
 * Tips
-** Change start mode
+** Start mode
 The default value of =wucuo-flyspell-start-mode= is "fast".
 
 If =wucuo-flyspell-start-mode= is "fast", =wucuo-start= calls =flyspell-region= to check visible region in current window periodically.
@@ -43,6 +43,24 @@ If =wucuo-flyspell-start-mode= is "normal", =wucuo-start= calls =flyspell-buffer
 The interval of buffer checking or region checking is controlled by =wucuo-update-interval=.
 
 Checking buffer or region only is more efficient than =flyspell-mode=.
+** Skip spell checking under certain under certain circumstances
+You can define a function in =wucuo-spell-check-buffer-predicate=. If the function returns t, the spell checking of current buffer will continue. If it returns nil, the spell checking is skipped.
+
+Here is sample to skip checking in specified major modes,
+#+begin_src elisp
+(setq wucuo-spell-check-buffer-predicate
+      (lambda ()
+        (not (memq major-mode
+                   '(dired-mode
+                     log-edit-mode
+                     compilation-mode
+                     help-mode
+                     profiler-report-mode
+                     speedbar-mode
+                     gud-mode
+                     calc-mode
+                     Info-mode)))))
+#+end_src
 ** Change dictionaries
 See =wucuo-aspell-language-to-use= and =wucuo-hunspell-dictionary-base-name=
 ** Only check words with specified font faces
@@ -67,7 +85,7 @@ Run =M-x wucuo-create-hunspell-personal-dictionary=
 (setq ispell-extra-args "--run-together")
 #+end_src
 ** Ignore major mode's own flyspell predicate
-Or if you need replace the default configuration of multiple major modes, you can use below code, 
+Or if you need replace the default configuration of multiple major modes, you can use below code,
 #+begin_src elisp
 (setq wucuo-modes-whose-predicate-ignored '("typescript-mode"))
 #+end_src

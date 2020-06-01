@@ -48,6 +48,24 @@
 ;;
 ;; See `wucuo-check-nil-font-face' on how to check plain text (text without font)
 ;;
+;; You can define a function in `wucuo-spell-check-buffer-predicate'.
+;; If the function returns t, the spell checking of current buffer will continue.
+;; If it returns nil, the spell checking is skipped.
+;;
+;; Here is sample to skip checking in specified major modes,
+;;   (setq wucuo-spell-check-buffer-predicate
+;;         (lambda ()
+;;           (not (memq major-mode
+;;                      '(dired-mode
+;;                        log-edit-mode
+;;                        compilation-mode
+;;                        help-mode
+;;                        profiler-report-mode
+;;                        speedbar-mode
+;;                        gud-mode
+;;                        calc-mode
+;;                        Info-mode)))))
+;;
 
 ;;; Code:
 (require 'flyspell)
