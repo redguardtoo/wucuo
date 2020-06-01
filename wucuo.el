@@ -2,7 +2,7 @@
 
 ;; Copyright (C) 2018-2020 Chen Bin
 ;;
-;; Version: 0.2.1
+;; Version: 0.2.2
 ;; Keywords: convenience
 ;; Author: Chen Bin <chenbin DOT sh AT gmail DOT com>
 ;; URL: http://github.com/redguardtoo/wucuo
@@ -124,7 +124,7 @@ If major mode's own predicate is not nil, the font face check is skipped."
   :type '(repeat sexp)
   :group 'wucuo)
 
-(defcustom wucuo-update-interval 16
+(defcustom wucuo-update-interval 2
   "Interval (seconds) for `wucuo-spell-check-buffer' to call `flyspell-buffer'."
   :group 'wucuo
   :type 'integer)
@@ -353,7 +353,7 @@ Returns t to continue checking, nil otherwise."
 ;;;###autoload
 (defun wucuo-version ()
   "Output version."
-  (message "0.2.1"))
+  (message "0.2.2"))
 
 
 ;;;###autoload
