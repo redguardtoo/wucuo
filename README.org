@@ -89,5 +89,7 @@ Or if you need replace the default configuration of multiple major modes, you ca
 #+begin_src elisp
 (setq wucuo-modes-whose-predicate-ignored '("typescript-mode"))
 #+end_src
+** Detect font face at point
+Use =wucuo-current-font-face= to detect font face at point.
 * Contact me
 Report bug at [[https://github.com/redguardtoo/wucuo]].

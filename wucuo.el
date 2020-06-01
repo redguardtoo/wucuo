@@ -48,6 +48,8 @@
 ;;
 ;; See `wucuo-check-nil-font-face' on how to check plain text (text without font)
 ;;
+;; Use `wucuo-current-font-face' to detect font face at point.
+;;
 ;; You can define a function in `wucuo-spell-check-buffer-predicate'.
 ;; If the function returns t, the spell checking of current buffer will continue.
 ;; If it returns nil, the spell checking is skipped.
