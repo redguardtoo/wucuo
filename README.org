@@ -31,6 +31,20 @@ The spell checking starts when current buffer is saved.
 
 Please note =wucuo= is a complete solution. You should turn off =flyspell-prog-mode= and =flyspell-mode= before using this program.
 
+Let me explain what's =flyspell=, =flyspell-prog-mode= and =flyspell-mode=.
+
+Flyspell is a packages. Wucuo is based on Flyspell. So the good news is *all your configuration for flyspell still works*.
+
+The package flyspell provides two minor modes, =flyspell-prog-mode= , and =flyspell-mode=. They are using commands and APIs from the package flyspell.
+
+This program replaces these two minor modes, using same commands and APIs from flyspell.
+
+If you have a flyspell problem like "how to make flyspell check plain text with multiple dictionaries", you'd better ask flyspell developers.
+
+A *sample flyspell configuration for multiple dictionaries* si still provided in [[Tips]] section though.
+
+This program only enhances the flyspell and is the replacement of its own two minor modes.
+
 See =wucuo-check-nil-font-face= on how to check plain text (text without font).
 * Tips
 ** Start mode
@@ -44,6 +58,7 @@ The interval of buffer checking or region checking is controlled by =wucuo-updat
 
 Checking buffer or region only is more efficient than =flyspell-mode=.
 ** Skip spell checking under certain under certain circumstances
+
 You can define a function in =wucuo-spell-check-buffer-predicate=. If the function returns t, the spell checking of current buffer will continue. If it returns nil, the spell checking is skipped.
 
 Here is sample to skip checking in specified major modes,
@@ -91,5 +106,20 @@ Or if you need replace the default configuration of multiple major modes, you ca
 #+end_src
 ** Detect font face at point
 Use =wucuo-current-font-face= to detect font face at point.
+** Make flyspell support multiple dictionaries
+Please install hunspell and insert below code into your =~/.emacs=,
+#+begin_src elisp
+(setq ispell-program-name "hunspell")
+;; below two lines reset the the hunspell to it STOPS querying locale!
+(setq ispell-local-dictionary "myhunspell") ; "myhunspell" is key to lookup in `ispell-local-dictionary-alist`
+(setq ispell-local-dictionary-alist
+      '(("myhunspell" "[[:alpha:]]" "[^[:alpha:]]" "[']" nil ("-d" "en_US" "zh_CN") nil utf-8)))
+#+end_src
+
+That's it.
+
+Please note above code is purely flyspell set up which is shared by the three minor modes I mentioned. The three minor modes are flyspell-prog-mode=, =flyspell-mode=, and =wucuo=. Even you don't use this program, you need need above set up.
+
+You could read my article [[https://blog.binchen.org/posts/what-s-the-best-spell-check-set-up-in-emacs.html][What's the best spell check setup in emacs]] and [[https://emacs.stackexchange.com/questions/21378/spell-check-with-multiple-dictionaries/22240#22240][my stackexchange answers on flyspell]] to learn the flyspell knowledge.
 * Contact me
 Report bug at [[https://github.com/redguardtoo/wucuo]].

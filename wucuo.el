@@ -39,6 +39,11 @@
 ;; Please note `flyspell-prog-mode' and `flyspell-mode' should be turned off
 ;; before using this program.
 ;;
+;; User's configuration for the package flyspell still works.
+;; Flyspell provides two minor modes, `flyspell-prog-mode' and `flyspell-mode'.
+;; They are replaced by this program.  But all the other commands and configuration
+;; for flyspell is still valid.
+;;
 ;; 3. Tips
 ;; If `wucuo-flyspell-start-mode' is "normal", `wucuo-start' runs `flyspell-buffer'.
 ;; If it's "normal", `wucuo-start' runs `flyspell-region' to check visible region
@@ -99,12 +104,16 @@ If it's t, check plain text in any mode."
   :group 'wucuo)
 
 (defcustom wucuo-aspell-language-to-use "en"
-  "Language to use passed to aspell option '--lang'."
+  "Language to use passed to aspell option '--lang'.
+Please note it's only to check camel cased words.
+User's original dictionary configration for flyspell still works."
   :type 'string
   :group 'wucuo)
 
 (defcustom wucuo-hunspell-dictionary-base-name "en_US"
-  "Dictionary base name pass to hunspell option '-d'."
+  "Dictionary base name pass to hunspell option '-d'.
+Please note it's only used to check camel cased words.
+User's original dictionary configration for flyspell still works."
   :type 'string
   :group 'wucuo)
 
