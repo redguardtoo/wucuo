@@ -448,5 +448,11 @@ Returns t to continue checking, nil otherwise."
 
     (add-hook 'after-save-hook #'wucuo-spell-check-buffer nil t))))
 
+(defun wucuo-stop ()
+  "Turn off wucuo and stop spell checking code."
+  (interactive)
+  (if wucuo-debug (message "wucuo-stop called."))
+  (remove-hook 'after-save-hook #'wucuo-spell-check-buffer t))
+
 (provide 'wucuo)
 ;;; wucuo.el ends here
