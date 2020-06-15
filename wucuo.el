@@ -256,7 +256,7 @@ Ported from 'https://github.com/fatih/camelcase/blob/master/camelcase.go'."
   "Feed LINE into spell checker and return output as string."
   (let* ((cmd (cond
                ;; aspell: `echo "helle world" | aspell pipe --lang en`
-               ((string-match-p "aspell$" ispell-program-name)
+               ((string-match-p "aspell\\(\\.exe\\)?$" ispell-program-name)
                 (format "%s pipe --lang %s" ispell-program-name wucuo-aspell-language-to-use))
                ;; hunspell: `echo "helle world" | hunspell -a -d en_US`
                (t
@@ -392,7 +392,7 @@ Returns t to continue checking, nil otherwise."
   (cond
    ((or (null ispell-program-name)
         (not (executable-find ispell-program-name))
-        (not (string-match "aspell$\\|hunspell$" ispell-program-name)))
+        (not (string-match "aspell\\(\\.exe\\)?$\\|hunspell\\(\\.exe\\)?$" ispell-program-name)))
     ;; do nothing, wucuo only works with aspell or hunspell
     (if wucuo-debug (message "aspell/hunspell missing in `ispell-program-name' or not installed.")))
 
