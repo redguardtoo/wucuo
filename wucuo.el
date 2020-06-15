@@ -158,7 +158,7 @@ If major mode's own predicate is not nil, the font face check is skipped."
   :group 'wucuo
   :type 'integer)
 
-(defcustom wucuo-spell-check-buffer-max (* 128 1024 1024)
+(defcustom wucuo-spell-check-buffer-max (* 256 1024)
   "Max size of buffer to run `wucuo-spell-check-buffer'."
   :type 'integer
   :group 'wucuo)
