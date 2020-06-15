@@ -471,6 +471,13 @@ Returns t to continue checking, nil otherwise."
 
 (defun wucuo-mode-off ()
   "Turn Wucuo mode on.  Do not use this; use `wucuo-mode' instead."
+
+  ;; {{ copied from `flyspell-mode-off'
+  (flyspell-delete-all-overlays)
+  (setq flyspell-pre-buffer nil)
+  (setq flyspell-pre-point  nil)
+  ;; }}
+
   (remove-hook 'after-save-hook #'wucuo-spell-check-buffer t))
 
 (define-minor-mode wucuo-mode
