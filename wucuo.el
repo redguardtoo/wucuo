@@ -111,14 +111,14 @@ If it's t, check plain text in any mode."
 (defcustom wucuo-aspell-language-to-use "en"
   "Language to use passed to aspell option '--lang'.
 Please note it's only to check camel cased words.
-User's original dictionary configration for flyspell still works."
+User's original dictionary configuration for flyspell still works."
   :type 'string
   :group 'wucuo)
 
 (defcustom wucuo-hunspell-dictionary-base-name "en_US"
   "Dictionary base name pass to hunspell option '-d'.
 Please note it's only used to check camel cased words.
-User's original dictionary configration for flyspell still works."
+User's original dictionary configuration for flyspell still works."
   :type 'string
   :group 'wucuo)
 
@@ -201,8 +201,11 @@ If QUIET is t, font face is not output."
 Ported from 'https://github.com/fatih/camelcase/blob/master/camelcase.go'."
   (let* ((case-fold-search nil)
          (len (length word))
-         ;; 32 sub-words is enough
-         (runes [nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil])
+         ;; 64 sub-words is enough
+         (runes [nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil
+                 nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil
+                 nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil
+                 nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil])
          (runes-length 0)
          (i 0)
          ch
