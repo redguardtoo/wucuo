@@ -123,5 +123,9 @@ That's it.
 Please note above code is purely flyspell set up which is shared by the three minor modes I mentioned. The three minor modes are flyspell-prog-mode=, =flyspell-mode=, and =wucuo=. Even you don't use this program, you need need above set up.
 
 You could read my article [[https://blog.binchen.org/posts/what-s-the-best-spell-check-set-up-in-emacs.html][What's the best spell check setup in emacs]] and [[https://emacs.stackexchange.com/questions/21378/spell-check-with-multiple-dictionaries/22240#22240][my stackexchange answers on flyspell]] to learn the flyspell knowledge.
+** Skip spell checking when buffer or visible region is too big
+In =wucuo-flyspell-start-mode= is "normal", =wucuo-spell-check-buffer-max= specifies the maximum size of buffer to check.
+
+In =wucuo-flyspell-start-mode= is "fast", =wucuo-spell-check-region-max= specifies the maximum size of visible region to check.
 * Contact me
 Report bug at [[https://github.com/redguardtoo/wucuo]].
