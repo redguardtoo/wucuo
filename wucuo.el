@@ -83,6 +83,7 @@
 ;;; Code:
 (require 'flyspell)
 (require 'font-lock)
+(require 'cl-lib)
 
 (defgroup wucuo nil
   "Code spell checker."
@@ -316,16 +317,19 @@ Ported from 'https://github.com/fatih/camelcase/blob/master/camelcase.go'."
   `(unless (memq major-mode wucuo-modes-whose-predicate-ignored)
      (get major-mode 'flyspell-mode-predicate)))
 
-(defmacro wucuo--font-matched-p (font-face)
-  "Text with FONT-FACE should be checked."
-  `(or (memq ,font-face wucuo-font-faces-to-check)
-       (memq ,font-face wucuo-personal-font-faces-to-check)
-       (and (null ,font-face)
-            (or (eq t wucuo-check-nil-font-face)
-                (and (eq wucuo-check-nil-font-face 'text)
-                     (derived-mode-p 'text-mode))
-                (and (eq wucuo-check-nil-font-face 'prog)
-                     (derived-mode-p 'prog-mode))))))
+(defun wucuo--font-matched-p (font-faces)
+  "Verify if any of FONT-FACES should be spell checked."
+  (let ((faces (if (listp font-faces)
+                   font-faces
+                 (list font-faces))))
+    (or (cl-intersection faces wucuo-font-faces-to-check)
+        (cl-intersection faces wucuo-personal-font-faces-to-check)
+        (and (null font-faces)
+             (or (eq t wucuo-check-nil-font-face)
+                 (and (eq wucuo-check-nil-font-face 'text)
+                      (derived-mode-p 'text-mode))
+                 (and (eq wucuo-check-nil-font-face 'prog)
+                      (derived-mode-p 'prog-mode)))))))
 
 ;;;###autoload
 (defun wucuo-generic-check-word-predicate ()
