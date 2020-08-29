@@ -325,8 +325,8 @@ Ported from 'https://github.com/fatih/camelcase/blob/master/camelcase.go'."
              (not (null font-faces)))
     (setq font-faces (list font-faces)))
 
-  (or (cl-intersection faces wucuo-font-faces-to-check)
-      (cl-intersection faces wucuo-personal-font-faces-to-check)
+  (or (cl-intersection font-faces wucuo-font-faces-to-check)
+      (cl-intersection font-faces wucuo-personal-font-faces-to-check)
       (and (null font-faces)
            (or (eq t wucuo-check-nil-font-face)
                (and (eq wucuo-check-nil-font-face 'text)
