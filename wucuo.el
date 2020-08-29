@@ -319,17 +319,20 @@ Ported from 'https://github.com/fatih/camelcase/blob/master/camelcase.go'."
 
 (defun wucuo--font-matched-p (font-faces)
   "Verify if any of FONT-FACES should be spell checked."
-  (let ((faces (if (listp font-faces)
-                   font-faces
-                 (list font-faces))))
-    (or (cl-intersection faces wucuo-font-faces-to-check)
-        (cl-intersection faces wucuo-personal-font-faces-to-check)
-        (and (null font-faces)
-             (or (eq t wucuo-check-nil-font-face)
-                 (and (eq wucuo-check-nil-font-face 'text)
-                      (derived-mode-p 'text-mode))
-                 (and (eq wucuo-check-nil-font-face 'prog)
-                      (derived-mode-p 'prog-mode)))))))
+
+  ;; multiple font faces at one point
+  (when (and (not (listp font-faces))
+             (not (null font-faces)))
+    (setq font-faces (list font-faces)))
+
+  (or (cl-intersection faces wucuo-font-faces-to-check)
+      (cl-intersection faces wucuo-personal-font-faces-to-check)
+      (and (null font-faces)
+           (or (eq t wucuo-check-nil-font-face)
+               (and (eq wucuo-check-nil-font-face 'text)
+                    (derived-mode-p 'text-mode))
+               (and (eq wucuo-check-nil-font-face 'prog)
+                    (derived-mode-p 'prog-mode))))))
 
 ;;;###autoload
 (defun wucuo-generic-check-word-predicate ()
