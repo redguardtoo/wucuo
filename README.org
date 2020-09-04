@@ -50,6 +50,13 @@ This program only enhances the flyspell and is the replacement of its own two mi
 
 See =wucuo-check-nil-font-face= on how to check plain text (text without font).
 * Tips
+** Spell check one file
+The function =wucuo-spell-check-file= will spell check one file and report its typos.
+
+The function could be used through Emacs cli,
+#+begin_src elisp
+emacs -batch -Q -l ~/projs/wucuo/wucuo.el --eval '(let* ((ispell-program-name "aspell") (ispell-extra-args (wucuo-aspell-cli-args t))) (wucuo-spell-check-file "hello.js"))'
+#+end_src
 ** Start mode
 The default value of =wucuo-flyspell-start-mode= is "fast".
 

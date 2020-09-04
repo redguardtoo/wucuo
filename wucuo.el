@@ -45,22 +45,25 @@
 ;; for flyspell is still valid.
 ;;
 ;; 3. Tips
-;; If `wucuo-flyspell-start-mode' is "normal", `wucuo-start' runs `flyspell-buffer'.
-;; If it's "normal", `wucuo-start' runs `flyspell-region' to check visible region
-;; in current window.
 ;;
-;; The interval of checking is set by `wucuo-update-interval'.
+;; - `wucuo-spell-check-file' will spell check one file and report its typos
+;;
+;; - If `wucuo-flyspell-start-mode' is "normal", `wucuo-start' runs `flyspell-buffer'.
+;;   If it's "normal", `wucuo-start' runs `flyspell-region' to check visible region
+;;   in current window.
+;;
+;; - The interval of checking is set by `wucuo-update-interval'
 ;;
 ;; See `wucuo-check-nil-font-face' on how to check plain text (text without font)
 ;;
-;; Use `wucuo-current-font-face' to detect font face at point.
+;; - Use `wucuo-current-font-face' to detect font face at point
 ;;
-;; In `wucuo-flyspell-start-mode' is "normal", `wucuo-spell-check-buffer-max' specifies
-;; the maximum size of buffer to check.
-;; In `wucuo-flyspell-start-mode' is "fast", `wucuo-spell-check-region-max' specifies
-;; the maximum size of visible region to check.
+;; - In `wucuo-flyspell-start-mode' is "normal", `wucuo-spell-check-buffer-max' specifies
+;;   the maximum size of buffer to check.
+;;   In `wucuo-flyspell-start-mode' is "fast", `wucuo-spell-check-region-max' specifies
+;;   the maximum size of visible region to check.
 ;;
-;; You can define a function in `wucuo-spell-check-buffer-predicate'.
+;; - You can define a function in `wucuo-spell-check-buffer-predicate'.
 ;; If the function returns t, the spell checking of current buffer will continue.
 ;;
 ;; If it returns nil, the spell checking is skipped.
@@ -95,7 +98,7 @@
   :group 'wucuo)
 
 (defcustom wucuo-inherit-flyspell-mode-keybindings t
-  "Inherit `flyspell-mode' keybindings."
+  "Inherit 'flyspell-mode' keybindings."
   :type 'boolean
   :group 'wucuo)
 
@@ -512,8 +515,50 @@ Returns t to continue checking, nil otherwise."
   ;; can't show the overlay of error but can't delete overlay
   (setq flyspell-large-region 1))
 
+;;;###autoload
+(defun wucuo-aspell-cli-args (&optional run-together)
+  "Create arguments for aspell cli.
+If RUN-TOGETHER is t, aspell can check camel cased word."
+  (let* ((args '("--sug-mode=ultra")))
+    ;; "--run-together-min" could NOT be 3, see `check` in "speller_impl.cpp" of aspell code
+    ;; The algorithm is not precise.
+    ;; Run `echo tasteTableConfig | aspell --lang=en_US -C --run-together-limit=16  --encoding=utf-8 -a` in shell.
+    (when run-together
+      (cond
+       ;; Kevin Atkinson said now aspell supports camel case directly
+       ;; https://github.com/redguardtoo/emacs.d/issues/796
+       ((string-match-p "--.*camel-case"
+                        (shell-command-to-string (concat ispell-program-name " --help")))
+        (setq args (append args '("--camel-case"))))
+
+       ;; old aspell uses "--run-together". Please note we are not dependent on this option
+       ;; to check camel case word. wucuo is the final solution. This aspell options is just
+       ;; some extra check to speed up the whole process.
+       (t
+        (setq args (append args '("--run-together" "--run-together-limit=16"))))))
+    args))
+
+;;;###autoload
+(defun wucuo-spell-check-file (file)
+  "Spell check FILE and report all typos."
+  (wucuo-enhance-flyspell)
+  (find-file file)
+  (font-lock-ensure)
+  (let* ((wucuo-flyspell-start-mode "normal"))
+    (wucuo-spell-check-internal)
+    ;; report all errors
+    (goto-char (point-min))
+    (flyspell-goto-next-error)
+    (while (< (point) (1- (point-max)))
+      (message "%s:%s: typo '%s' at %s is found"
+               file
+               (count-lines (point-min) (point))
+               (thing-at-point 'word)
+               (point))
+      (flyspell-goto-next-error))))
+
 (defun wucuo-mode-on ()
-  "Turn Wucuo mode on.  Do not use this; use `wucuo-mode' instead."
+  "Turn Wucuo mode on.  Do not use this; use 'wucuo-mode' instead."
   (cond
    (flyspell-mode
     (message "Please turn off `flyspell-mode' and `flyspell-prog-mode' before wucuo starts!"))
@@ -522,7 +567,7 @@ Returns t to continue checking, nil otherwise."
     (add-hook 'after-save-hook #'wucuo-spell-check-buffer nil t))))
 
 (defun wucuo-mode-off ()
-  "Turn Wucuo mode on.  Do not use this; use `wucuo-mode' instead."
+  "Turn Wucuo mode on.  Do not use this; use 'wucuo-mode' instead."
 
   ;; {{ copied from `flyspell-mode-off'
   (flyspell-delete-all-overlays)
@@ -543,7 +588,7 @@ spawns a single Ispell process and checks each word.  The default
 flyspell behavior is to highlight incorrect words.
 
 Remark:
-`wucuo-mode' uses `flyspell' and `flyspell-mode-mpa'.  Thus all Flyspell options and
+`wucuo-mode' uses `flyspell' and `flyspell-mode-map'.  Thus all Flyspell options and
 key bindings are valid."
   :lighter flyspell-mode-line-string
   :keymap flyspell-mode-map
