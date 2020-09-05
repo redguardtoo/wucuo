@@ -539,23 +539,29 @@ If RUN-TOGETHER is t, aspell can check camel cased word."
     args))
 
 ;;;###autoload
-(defun wucuo-spell-check-file (file)
-  "Spell check FILE and report all typos."
+(defun wucuo-spell-check-file (file &optional kill-emacs-p full-path)
+  "Spell check FILE and report all typos.
+If KILL-EMACS-P is t, kill the Emacs and set exit program code.
+If FULL-PATH is t, always show typo's file full path."
   (wucuo-enhance-flyspell)
   (find-file file)
   (font-lock-ensure)
-  (let* ((wucuo-flyspell-start-mode "normal"))
+  (let* ((wucuo-flyspell-start-mode "normal")
+         typo-p)
     (wucuo-spell-check-internal)
     ;; report all errors
     (goto-char (point-min))
     (flyspell-goto-next-error)
     (while (< (point) (1- (point-max)))
+      (setq typo-p t)
       (message "%s:%s: typo '%s' at %s is found"
-               file
+               (if full-path (file-truename file) file)
                (count-lines (point-min) (point))
                (thing-at-point 'word)
                (point))
-      (flyspell-goto-next-error))))
+      (flyspell-goto-next-error))
+    (when (and typo-p kill-emacs-p)
+      (kill-emacs 1))))
 
 (defun wucuo-mode-on ()
   "Turn Wucuo mode on.  Do not use this; use 'wucuo-mode' instead."
