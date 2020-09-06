@@ -132,14 +132,15 @@ User's original dictionary configuration for flyspell still works."
   :type 'string
   :group 'wucuo)
 
+;; @see https://www.gnu.org/software/emacs/manual/html_node/elisp/Faces-for-Font-Lock.html
 (defcustom wucuo-font-faces-to-check
   '(font-lock-string-face
     font-lock-doc-face
     font-lock-comment-face
-    font-lock-builtin-face
+    ;; font-lock-builtin-face ; names of built-in functions.
     font-lock-function-name-face
     font-lock-variable-name-face
-    font-lock-type-face
+    ;; font-lock-type-face ; names of user-defined data types
 
     ;; javascript
     js2-function-call
@@ -148,7 +149,6 @@ User's original dictionary configuration for flyspell still works."
     js2-object-property-access
 
     ;; css
-    font-lock-builtin-face
     css-selector
     css-property
 
