@@ -101,10 +101,14 @@ There are three solutions.
   t)
 (setq wucuo-extra-predicate #'my-checker)
 #+end_src
-*** Create personal dictionary for aspell
-Run =M-x wucuo-create-aspell-personal-dictionary=
-*** Create personal dictionary for hunspell
-Run =M-x wucuo-create-hunspell-personal-dictionary=
+*** Create personal dictionary for aspell and hunspell
+Aspell, run =M-x wucuo-create-aspell-personal-dictionary=. The plain text dictionary =~/.aspell.en.pws= is created if its option =--lang= is "en" ("en" is default value). 
+
+Hunspell, run =M-x wucuo-create-hunspell-personal-dictionary=. The plain text dictionary =~/.hunspell_en_US= is created if its option =-d= contains "en_US".
+
+Here is my [[https://gist.github.com/redguardtoo/8a232c0aad3b4d712bef1c2e910b8b33][~/.aspell.en.pws]].
+
+Hunspell's personal dictionary is same as aspell.
 ** Speed up checking if aspell is used
 #+begin_src elisp
 (setq ispell-extra-args "--run-together")
