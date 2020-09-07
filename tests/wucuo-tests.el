@@ -39,12 +39,12 @@
     (goto-char (point-min))
     (flyspell-goto-next-error)
     (should (string= (wucuo-current-font-face) "font-lock-comment-face"))
-    (should (wucuo--font-matched-p (wucuo-get-font-face (point))))
+    (should (wucuo--font-matched-p (wucuo-sdk-get-font-face (point))))
     (should (string= "helle" (thing-at-point 'word)))
 
     (flyspell-goto-next-error)
     (should (string= (wucuo-current-font-face) "font-lock-string-face"))
-    (should (wucuo--font-matched-p (wucuo-get-font-face (point))))
+    (should (wucuo--font-matched-p (wucuo-sdk-get-font-face (point))))
     (should (string= "worlde" (thing-at-point 'word)))
 
     ;; end of errors
@@ -74,18 +74,18 @@
 
     (flyspell-goto-next-error)
     (should (string= (wucuo-current-font-face) "font-lock-function-name-face"))
-    (should (wucuo--font-matched-p (wucuo-get-font-face (point))))
+    (should (wucuo--font-matched-p (wucuo-sdk-get-font-face (point))))
     (should (string= "myfun" (thing-at-point 'word)))
 
     (flyspell-goto-next-error)
     (should (string= (wucuo-current-font-face) "font-lock-variable-name-face"))
-    (should (wucuo--font-matched-p (wucuo-get-font-face (point))))
+    (should (wucuo--font-matched-p (wucuo-sdk-get-font-face (point))))
     (should (string= "typoHelle" (thing-at-point 'word)))
 
     ;; Please note correct "correctVar" is right camel-cased name
     (flyspell-goto-next-error)
     (should (string= (wucuo-current-font-face) "font-lock-variable-name-face"))
-    (should (wucuo--font-matched-p (wucuo-get-font-face (point))))
+    (should (wucuo--font-matched-p (wucuo-sdk-get-font-face (point))))
     (should (string= "correcVariable" (thing-at-point 'word)))
 
     ;; end of errors
