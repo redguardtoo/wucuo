@@ -90,6 +90,8 @@
 (require 'cl-lib)
 (require 'find-lisp)
 (require 'wucuo-sdk)
+(require 'wucuo-flyspell-html-verify)
+(require 'wucuo-flyspell-org-verify)
 
 (defgroup wucuo nil
   "Code spell checker."
