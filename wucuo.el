@@ -2,7 +2,7 @@
 
 ;; Copyright (C) 2018-2020 Chen Bin
 ;;
-;; Version: 0.2.7
+;; Version: 0.2.8
 ;; Keywords: convenience
 ;; Author: Chen Bin <chenbin DOT sh AT gmail DOT com>
 ;; URL: http://github.com/redguardtoo/wucuo
@@ -258,11 +258,15 @@ Returns t to continue checking, nil otherwise.")
 ;; Timer to run auto-update tags file
 (defvar wucuo-timer nil "Internal timer.")
 
+;;;###autoload
 (defun wucuo-register-extra-typo-detection-algorithms ()
   "Register extra typo detection algorithms."
   (autoload 'markdown-flyspell-check-word-p "markdown-mode" nil)
   (dolist (a wucuo-extra-typo-detection-algorithms)
     (autoload a (symbol-name a) nil)))
+
+;; register autoload right now
+(wucuo-register-extra-typo-detection-algorithms)
 
 ;;;###autoload
 (defun wucuo-current-font-face (&optional quiet)
@@ -487,7 +491,7 @@ Returns t to continue checking, nil otherwise."
 ;;;###autoload
 (defun wucuo-version ()
   "Output version."
-  (message "0.2.7"))
+  (message "0.2.8"))
 
 ;;;###autoload
 (defun wucuo-spell-check-visible-region ()
@@ -613,12 +617,14 @@ If RUN-TOGETHER is t, aspell can check camel cased word."
         (setq args (append args '("--run-together" "--run-together-limit=16"))))))
     args))
 
+;;;###autoload
+(defun wucuo-flyspell-highlight-incorrect-region-hack (orig-func &rest args)
+  "Don't mark doublon (double words) as typo.  ORIG-FUNC and ARGS is part of advice."
+  (let* ((poss (nth 2 args)))
+    (when (or wucuo-flyspell-check-doublon (not (eq 'doublon poss)))
+      (apply orig-func args))))
+
 (with-eval-after-load 'flyspell
-  (defun wucuo-flyspell-highlight-incorrect-region-hack (orig-func &rest args)
-    "Don't mark doublon (double words) as typo.  ORIG-FUNC and ARGS is part of advice."
-    (let* ((poss (nth 2 args)))
-      (when (or wucuo-flyspell-check-doublon (not (eq 'doublon poss)))
-        (apply orig-func args))))
   (advice-add 'flyspell-highlight-incorrect-region :around #'wucuo-flyspell-highlight-incorrect-region-hack))
 
 (defun wucuo-goto-next-error ()
@@ -674,8 +680,9 @@ Return t if there is typo."
       (kill-emacs 1))
     typo-p))
 
+;;;###autoload
 (defun wucuo-find-file-predicate  (file dir)
-  "True if FILE matches `wucuo-find-file-regexp'.
+  "True if FILE does match `wucuo-find-file-regexp'.
 And FILE does not match `wucuo-exclude-file-regexp'.
 DIR is the directory containing FILE."
   (and (not (file-directory-p (expand-file-name file dir)))
@@ -683,6 +690,7 @@ DIR is the directory containing FILE."
                  (string-match wucuo-exclude-file-regexp file)))
        (string-match wucuo-find-file-regexp file)))
 
+;;;###autoload
 (defun wucuo-find-directory-predicate  (dir parent)
   "True if DIR is not a dot file, and not a symlink.
 And DIR does not match `wucuo-exclude-directories'.
@@ -761,8 +769,6 @@ key bindings are valid."
              (wucuo-mode -1))))
    (t
     (wucuo-mode-off))))
-
-(wucuo-register-extra-typo-detection-algorithms)
 
 (provide 'wucuo)
 ;;; wucuo.el ends here
