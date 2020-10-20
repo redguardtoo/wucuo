@@ -261,16 +261,6 @@ Returns t to continue checking, nil otherwise.")
 (defvar wucuo-timer nil "Internal timer.")
 
 ;;;###autoload
-(defun wucuo-register-extra-typo-detection-algorithms ()
-  "Register extra typo detection algorithms."
-  (autoload 'markdown-flyspell-check-word-p "markdown-mode" nil)
-  (dolist (a wucuo-extra-typo-detection-algorithms)
-    (autoload a (symbol-name a) nil)))
-
-;; register autoload right now
-(wucuo-register-extra-typo-detection-algorithms)
-
-;;;###autoload
 (defun wucuo-current-font-face (&optional quiet)
   "Get font face under cursor.
 If QUIET is t, font face is not output."
