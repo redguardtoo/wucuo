@@ -412,6 +412,9 @@ Ported from 'https://github.com/fatih/camelcase/blob/master/camelcase.go'."
   (or (derived-mode-p 'nxml-mode)
       (eq major-mode 'web-mode)))
 
+;; Register autoload for markdown-mode.
+(autoload 'markdown-flyspell-check-word-p "markdown-mode")
+
 ;;;###autoload
 (defun wucuo-generic-check-word-predicate ()
   "Function providing per-mode customization over which words are spell checked.
