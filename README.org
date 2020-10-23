@@ -19,12 +19,12 @@ Screenshot:
 [[file:huge-file-demo-nq8.png]]
 
 * Install
-wucuo is already uploaded to [[http://melpa.org]]. The best way to install is Emacs package manager.
+Wucuo is uploaded to [[http://melpa.org]]. The best way to install is Emacs package manager.
 * Setup
-Please install either aspell or hunspell and corresponding dictionaries at first.
+Please install either Aspell or Hunspell and the dictionaries at first.
 
 * Usage
-Or add below code into =~/.emacs= to enable =wucuo=,
+Add below code into =~/.emacs= to enable =wucuo=,
 #+begin_src elisp
 (add-hook 'prog-mode-hook #'wucuo-start)
 (add-hook 'text-mode-hook #'wucuo-start)
@@ -32,21 +32,13 @@ Or add below code into =~/.emacs= to enable =wucuo=,
 
 The spell checking starts when current buffer is saved.
 
-Please note =wucuo= is a complete solution. You should turn off =flyspell-prog-mode= and =flyspell-mode= before using this program.
+Please note Wucuo is a complete solution. You should turn off =flyspell-prog-mode= and =flyspell-mode= before using this program.
 
-Let me explain what's =flyspell=, =flyspell-prog-mode= and =flyspell-mode=.
+Flyspell is a packages which Wucuo is based on. So the good news is * your configuration for flyspell still works*.
 
-Flyspell is a packages. Wucuo is based on Flyspell. So the good news is *all your configuration for flyspell still works*.
+Flyspell provides two minor modes, =flyspell-prog-mode= and =flyspell-mode= which uses Flyspell API.
 
-The package flyspell provides two minor modes, =flyspell-prog-mode= , and =flyspell-mode=. They are using commands and APIs from the package flyspell.
-
-This program replaces these two minor modes, using same commands and APIs from flyspell.
-
-If you have a flyspell problem like "how to make flyspell check plain text with multiple dictionaries", you'd better ask flyspell developers.
-
-A *sample flyspell configuration for multiple dictionaries* si still provided in [[Tips]] section though.
-
-This program only enhances the flyspell and is the replacement of its own two minor modes.
+This program replaces these two minor modes, using same Flyspell API.
 
 See =wucuo-check-nil-font-face= on how to check plain text (text without font).
 * Tips
@@ -121,7 +113,7 @@ Or if you need replace the default configuration of multiple major modes, you ca
 #+end_src
 ** Detect font face at point
 Use =wucuo-current-font-face= to detect font face at point.
-** Make flyspell support multiple dictionaries
+** Make Flyspell support multiple dictionaries
 Please install hunspell and insert below code into your =~/.emacs=,
 #+begin_src elisp
 (setq ispell-program-name "hunspell")
@@ -133,7 +125,7 @@ Please install hunspell and insert below code into your =~/.emacs=,
 
 That's it.
 
-Please note above code is purely flyspell set up which is shared by the three minor modes I mentioned. The three minor modes are flyspell-prog-mode=, =flyspell-mode=, and =wucuo=. Even you don't use this program, you need need above set up.
+Please note above code is purely flyspell set up which is shared by the three minor modes I mentioned. The three minor modes are =flyspell-prog-mode=, =flyspell-mode=, and =wucuo=. Even you don't use this program, you need need above configuration.
 
 You could read my article [[https://blog.binchen.org/posts/what-s-the-best-spell-check-set-up-in-emacs.html][What's the best spell check setup in emacs]] and [[https://emacs.stackexchange.com/questions/21378/spell-check-with-multiple-dictionaries/22240#22240][my stackexchange answers on flyspell]] to learn the flyspell knowledge.
 ** Skip spell checking when buffer or visible region is too big
