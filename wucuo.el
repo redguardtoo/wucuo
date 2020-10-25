@@ -65,9 +65,8 @@
 ;;   the maximum size of visible region to check.
 ;;
 ;; - You can define a function in `wucuo-spell-check-buffer-predicate'.
-;; If the function returns t, the spell checking of current buffer will continue.
-;;
-;; If it returns nil, the spell checking is skipped.
+;;   If the function returns t, the spell checking of current buffer will continue.
+;;   If it returns nil, the spell checking is skipped.
 ;;
 ;; Here is sample to skip checking in specified major modes,
 ;;   (setq wucuo-spell-check-buffer-predicate
@@ -82,6 +81,9 @@
 ;;                        gud-mode
 ;;                        calc-mode
 ;;                        Info-mode)))))
+;;
+;; This program assumes Flyspell is already set up properly.
+;; If you have problems on Flyspell configuration, check  wucuo's website.
 ;;
 
 ;;; Code:

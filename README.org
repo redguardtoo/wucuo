@@ -9,7 +9,7 @@ Fastest solution to spell check camel case code or plain text
 
 - Fast
 - Works out of box
-- Support both aspell and hunspell
+- Support both [[http://aspell.net/][Aspell]] and [[https://hunspell.github.io/][Hunspell]]
 - Powerful and easy to set up
 
 Screenshot:
@@ -23,6 +23,9 @@ Wucuo is uploaded to [[http://melpa.org]]. The best way to install is Emacs pack
 * Setup
 Please install either Aspell or Hunspell and the dictionaries at first.
 
+This program does not mess up your Flyspell configuration. It assumes Flyspell is already configured properly.
+
+But if you get some problem on Flyspell configuration, check *sample configuration* in [[Tips]] section.
 * Usage
 Add below code into =~/.emacs= to enable =wucuo=,
 #+begin_src elisp
@@ -34,7 +37,7 @@ The spell checking starts when current buffer is saved.
 
 Please note Wucuo is a complete solution. You should turn off =flyspell-prog-mode= and =flyspell-mode= before using this program.
 
-Flyspell is a packages which Wucuo is based on. So the good news is * your configuration for flyspell still works*.
+Flyspell is a packages which Wucuo is based on. So the good news is *your configuration for flyspell still works*.
 
 Flyspell provides two minor modes, =flyspell-prog-mode= and =flyspell-mode= which uses Flyspell API.
 
@@ -42,11 +45,44 @@ This program replaces these two minor modes, using same Flyspell API.
 
 See =wucuo-check-nil-font-face= on how to check plain text (text without font).
 * Tips
+** Configure Flyspell
+Flyspell configuration is shared by =flyspell-prog-mode=, =flyspell-mode=, and =wucuo=.
+
+Even you don't use this program, you still need configure flyspell.
+
+If your existing Flyspell configuration already works, you don't need read this section.
+
+This section is to help users who have problem to setup flyspell.
+
+You could read my article [[https://blog.binchen.org/posts/what-s-the-best-spell-check-set-up-in-emacs.html][What's the best spell check setup in emacs]] and [[https://emacs.stackexchange.com/questions/21378/spell-check-with-multiple-dictionaries/22240#22240][my stackexchange answers on flyspell]] to learn the Flyspell knowledge.
+
+*** aspell configuration sample
+Please install command line program Aspell and insert below code into =~/.emacs=,
+#+begin_src elisp
+(setq ispell-program-name "aspell")
+;; You could add extra option "--camel-case" for since Aspell 0.60.8 
+;; @see https://github.com/redguardtoo/emacs.d/issues/796
+(setq ispell-extra-args '("--sug-mode=ultra" "--lang=en_US" "--run-together" "--run-together-limit=16"))
+#+end_src
+*** hunspell configuration sample
+Please install command line program hunspell and insert below code into =~/.emacs=,
+#+begin_src elisp
+(setq ispell-program-name "hunspell")
+;; reset the hunspell so it STOPS querying locale!
+(setq ispell-local-dictionary "myhunspell") ; "myhunspell" is key to lookup in `ispell-local-dictionary-alist`
+;; two dicitionaries "en_US" and "zh_CN" are used. Feel free to remove "zh_CN"
+(setq ispell-local-dictionary-alist
+      '(("myhunspell" "[[:alpha:]]" "[^[:alpha:]]" "[']" nil ("-d" "en_US" "zh_CN") nil utf-8)))
+;; new variable `ispell-hunspell-dictionary-alist' is defined in Emacs
+;; If it's nil, Emacs tries to automatically set up the dictionaries.
+(when (boundp 'ispell-hunspell-dictionary-alist)
+      (setq ispell-hunspell-dictionary-alist ispell-local-dictionary-alist))
+#+end_src
 ** Spell check file and directory
 The function =wucuo-spell-check-file= will spell check one file and report typos.
 The function =wucuo-spell-check-directory= will spell check files under one directory and report typos.
 
-Above functions could be used through Emacs cli,
+Above functions could be used through Emacs CLI (using Aspell),
 #+begin_src elisp
 emacs -batch -Q -l ~/projs/wucuo/wucuo.el --eval '(let* ((ispell-program-name "aspell") (ispell-extra-args (wucuo-aspell-cli-args t))) (wucuo-spell-check-directory "."))'
 #+end_src
@@ -60,7 +96,7 @@ If =wucuo-flyspell-start-mode= is "normal", =wucuo-start= calls =flyspell-buffer
 The interval of buffer checking or region checking is controlled by =wucuo-update-interval=.
 
 Checking buffer or region only is more efficient than =flyspell-mode=.
-** Skip spell checking under certain under certain circumstances
+** Skip spell checking under certain circumstances
 
 You can define a function in =wucuo-spell-check-buffer-predicate=. If the function returns t, the spell checking of current buffer will continue. If it returns nil, the spell checking is skipped.
 
@@ -94,7 +130,7 @@ There are three solutions.
   t)
 (setq wucuo-extra-predicate #'my-checker)
 #+end_src
-*** Create personal dictionary for aspell and hunspell
+*** Create personal dictionary
 Aspell, run =M-x wucuo-create-aspell-personal-dictionary=. The plain text dictionary =~/.aspell.en.pws= is created if its option =--lang= is "en" ("en" is default value). 
 
 Hunspell, run =M-x wucuo-create-hunspell-personal-dictionary=. The plain text dictionary =~/.hunspell_en_US= is created if its option =-d= contains "en_US".
@@ -113,21 +149,6 @@ Or if you need replace the default configuration of multiple major modes, you ca
 #+end_src
 ** Detect font face at point
 Use =wucuo-current-font-face= to detect font face at point.
-** Make Flyspell support multiple dictionaries
-Please install hunspell and insert below code into your =~/.emacs=,
-#+begin_src elisp
-(setq ispell-program-name "hunspell")
-;; below two lines reset the the hunspell to it STOPS querying locale!
-(setq ispell-local-dictionary "myhunspell") ; "myhunspell" is key to lookup in `ispell-local-dictionary-alist`
-(setq ispell-local-dictionary-alist
-      '(("myhunspell" "[[:alpha:]]" "[^[:alpha:]]" "[']" nil ("-d" "en_US" "zh_CN") nil utf-8)))
-#+end_src
-
-That's it.
-
-Please note above code is purely flyspell set up which is shared by the three minor modes I mentioned. The three minor modes are =flyspell-prog-mode=, =flyspell-mode=, and =wucuo=. Even you don't use this program, you need need above configuration.
-
-You could read my article [[https://blog.binchen.org/posts/what-s-the-best-spell-check-set-up-in-emacs.html][What's the best spell check setup in emacs]] and [[https://emacs.stackexchange.com/questions/21378/spell-check-with-multiple-dictionaries/22240#22240][my stackexchange answers on flyspell]] to learn the flyspell knowledge.
 ** Skip spell checking when buffer or visible region is too big
 In =wucuo-flyspell-start-mode= is "normal", =wucuo-spell-check-buffer-max= specifies the maximum size of buffer to check.
 
