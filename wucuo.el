@@ -85,6 +85,8 @@
 ;; This program assumes Flyspell is already set up properly.
 ;; If you have problems on Flyspell configuration, check  wucuo's website.
 ;;
+;; To ignore specific typo, you can set `wucuo-extra-predicate'.
+;;
 
 ;;; Code:
 (require 'flyspell)
