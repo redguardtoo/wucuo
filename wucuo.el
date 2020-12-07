@@ -2,7 +2,7 @@
 
 ;; Copyright (C) 2018-2020 Chen Bin
 ;;
-;; Version: 0.2.8
+;; Version: 0.2.9
 ;; Keywords: convenience
 ;; Author: Chen Bin <chenbin DOT sh AT gmail DOT com>
 ;; URL: http://github.com/redguardtoo/wucuo
@@ -259,6 +259,9 @@ Returns t to continue checking, nil otherwise.")
     wucuo-flyspell-org-verify)
   "Extra Algorithms to test typos.")
 
+(defvar wucuo-double-check-font-faces '(font-lock-string-face)
+  "Font faces to double check typo.")
+
 ;; Timer to run auto-update tags file
 (defvar wucuo-timer nil "Internal timer.")
 
@@ -415,6 +418,41 @@ Ported from 'https://github.com/fatih/camelcase/blob/master/camelcase.go'."
       (eq major-mode 'web-mode)))
 
 ;;;###autoload
+(defun wucuo-typo-p (word)
+  "Spell check WORD and return t if it's typo.
+This is slow because new shell process is created."
+  (save-excursion
+    (with-temp-buffer
+      (insert word)
+      (font-lock-ensure)
+      (flyspell-word)
+      (let* ((overlays (overlays-at (point-min))))
+        (and overlays (flyspell-overlay-p (car overlays)))))))
+
+(defun wucuo-char (position)
+  "Return character at POSITION."
+  (save-excursion
+    (goto-char position)
+    (following-char)))
+
+(defun wucuo-aspell-incorrect-typo-p (word)
+  "Aspell wrongly regards a WORD near single quote as typo."
+  (let* ((typo-p t))
+    (when (and (string-match "aspell\\(\\.exe\\)?$" ispell-program-name)
+               (memq (wucuo-sdk-get-font-face (point)) wucuo-double-check-font-faces))
+      (let* ((pos (- (point) (length word)))
+             (ch (wucuo-char (- pos 2))))
+        ;; aspell regard symbol as part of word
+        ;; @see http://aspell.net/0.61/man-html/Words-With-Symbols-in-Them.html#Words-With-Symbols-in-Them
+        ;; @see https://github.com/redguardtoo/emacs.d/issues/892
+        (when (and (memq (wucuo-sdk-get-font-face pos) wucuo-double-check-font-faces)
+                   (eq (wucuo-char (1- pos)) ?')
+                   (<= ?a ch)
+                   (>= ?z ch))
+          (setq typo-p (wucuo-typo-p word)))))
+    (not typo-p)))
+
+;;;###autoload
 (defun wucuo-generic-check-word-predicate ()
   "Function providing per-mode customization over which words are spell checked.
 Returns t to continue checking, nil otherwise."
@@ -436,7 +474,9 @@ Returns t to continue checking, nil otherwise."
       nil)
      ;; ignore two character word.
      ;; in some major mode, word equals to sub-word
-     ((< (length (setq word (thing-at-point 'symbol))) 2)
+     ((< (length (setq word (save-excursion
+                              (goto-char pos)
+                              (thing-at-point 'word)))) 2)
       (setq rlt nil))
 
      ((and mode-predicate (not (funcall mode-predicate)))
@@ -462,6 +502,9 @@ Returns t to continue checking, nil otherwise."
            (> (length subwords) 1))
       (let* ((s (mapconcat #'wucuo-handle-sub-word subwords " ")))
         (setq rlt (wucuo-check-camel-case-word-predicate s))))
+
+     ((wucuo-aspell-incorrect-typo-p word)
+      (setq rlt nil))
 
      ;; `wucuo-extra-predicate' actually does nothing by default
      (t
@@ -495,7 +538,7 @@ Returns t to continue checking, nil otherwise."
 ;;;###autoload
 (defun wucuo-version ()
   "Output version."
-  (message "0.2.8"))
+  (message "0.2.9"))
 
 ;;;###autoload
 (defun wucuo-spell-check-visible-region ()

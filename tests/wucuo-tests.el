@@ -94,5 +94,32 @@
 
     (should (eq major-mode 'js-mode))))
 
+(ert-deftest wucuo-test-check-api ()
+  (should (wucuo-typo-p "helle"))
+  (should (not (wucuo-typo-p "hello"))))
+
+(ert-deftest wucuo-test-aspell-workaround ()
+  (with-temp-buffer
+    (insert "print(f'hello test lex helle')\n")
+    (python-mode)
+    (font-lock-ensure)
+
+    (wucuo-enhance-flyspell)
+    ;; check whole buffer
+    (let* ((wucuo-flyspell-start-mode "normal"))
+      (wucuo-spell-check-internal))
+
+    (goto-char (point-min))
+
+    (flyspell-goto-next-error)
+    (should (string= (wucuo-current-font-face) "font-lock-string-face"))
+    (should (string= "lex" (thing-at-point 'word)))
+
+    (flyspell-goto-next-error)
+    (should (string= (wucuo-current-font-face) "font-lock-string-face"))
+    (should (string= "helle" (thing-at-point 'word)))
+
+    (should (eq major-mode 'python-mode))))
+
 (ert-run-tests-batch-and-exit)
 ;;; wucuo-tests.el ends here
