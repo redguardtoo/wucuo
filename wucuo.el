@@ -429,24 +429,18 @@ This is slow because new shell process is created."
       (let* ((overlays (overlays-at (point-min))))
         (and overlays (flyspell-overlay-p (car overlays)))))))
 
-(defun wucuo-char (position)
-  "Return character at POSITION."
-  (save-excursion
-    (goto-char position)
-    (following-char)))
-
 (defun wucuo-aspell-incorrect-typo-p (word)
   "Aspell wrongly regards a WORD near single quote as typo."
   (let* ((typo-p t))
     (when (and (string-match "aspell\\(\\.exe\\)?$" ispell-program-name)
                (memq (wucuo-sdk-get-font-face (point)) wucuo-double-check-font-faces))
       (let* ((pos (- (point) (length word)))
-             (ch (wucuo-char (- pos 2))))
+             (ch (char-before (1- pos))))
         ;; aspell regard symbol as part of word
         ;; @see http://aspell.net/0.61/man-html/Words-With-Symbols-in-Them.html#Words-With-Symbols-in-Them
         ;; @see https://github.com/redguardtoo/emacs.d/issues/892
         (when (and (memq (wucuo-sdk-get-font-face pos) wucuo-double-check-font-faces)
-                   (eq (wucuo-char (1- pos)) ?')
+                   (eq (char-before pos) ?')
                    (<= ?a ch)
                    (>= ?z ch))
           (setq typo-p (wucuo-typo-p word)))))
