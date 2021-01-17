@@ -70,7 +70,7 @@ Please install command line program hunspell and insert below code into =~/.emac
 (setq ispell-program-name "hunspell")
 ;; reset the hunspell so it STOPS querying locale!
 (setq ispell-local-dictionary "myhunspell") ; "myhunspell" is key to lookup in `ispell-local-dictionary-alist`
-;; two dicitionaries "en_US" and "zh_CN" are used. Feel free to remove "zh_CN"
+;; two dictionaries "en_US" and "zh_CN" are used. Feel free to remove "zh_CN"
 (setq ispell-local-dictionary-alist
       '(("myhunspell" "[[:alpha:]]" "[^[:alpha:]]" "[']" nil ("-d" "en_US" "zh_CN") nil utf-8)))
 ;; new variable `ispell-hunspell-dictionary-alist' is defined in Emacs
