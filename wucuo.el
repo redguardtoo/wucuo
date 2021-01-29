@@ -585,23 +585,23 @@ Returns t to continue checking, nil otherwise."
     ;; do nothing, wucuo only works with aspell or hunspell
     (if wucuo-debug (message "aspell/hunspell missing in `ispell-program-name' or not installed.")))
 
-   ((not wucuo-timer)
+   ((or (not wucuo-timer)
+        (> (- (float-time (current-time)) (float-time wucuo-timer))
+           wucuo-update-interval))
     ;; start timer if not started yet
-    (setq wucuo-timer (current-time)))
-
-   ((< (- (float-time (current-time)) (float-time wucuo-timer))
-       wucuo-update-interval)
-    ;; do nothing, avoid `flyspell-buffer' too often
-    )
-
-   (t
-    ;; real spell checking
     (setq wucuo-timer (current-time))
+
+    (if wucuo-debug (message "wucuo-spell-check-buffer actually happened."))
+
     (when (and (wucuo-buffer-windows-visible-p)
                (or (null wucuo-spell-check-buffer-predicate)
                    (and (functionp wucuo-spell-check-buffer-predicate)
                         (funcall wucuo-spell-check-buffer-predicate))))
-      (wucuo-spell-check-internal)))))
+      (wucuo-spell-check-internal)))
+
+   (t
+    ;; do nothing, avoid `flyspell-buffer' too often
+    (if wucuo-debug (message "wucuo-spell-check-buffer actually skipped.")))))
 
 ;;;###autoload
 (defun wucuo-start (&optional arg)
