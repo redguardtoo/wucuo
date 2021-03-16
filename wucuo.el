@@ -46,23 +46,19 @@
 ;;
 ;; 3. Tips
 ;;
-;; - `wucuo-spell-check-file' spell check one file and report typos
-;; - `wucuo-spell-check-directory' spell check files in one directory and report typos
+;; - `wucuo-spell-check-file' checks one file and report typos
+;; - `wucuo-spell-check-directory' checks files in one directory and report typos
 ;;
-;; - If `wucuo-flyspell-start-mode' is "normal", `wucuo-start' runs `flyspell-buffer'.
-;;   If it's "normal", `wucuo-start' runs `flyspell-region' to check visible region
-;;   in current window.
+;; - If `wucuo-flyspell-start-mode' is "normal", `wucuo-start' runs `flyspell-buffer'
+;;   and `wucuo-spell-check-buffer-max' specifies maximum size of buffer to check.
+;;   If it's "fast", `wucuo-start' runs `flyspell-region' on current visible region
+;;   and `wucuo-spell-check-region-max' specifies maximum size of the region to check.
 ;;
 ;; - The interval of checking is set by `wucuo-update-interval'
 ;;
-;; See `wucuo-check-nil-font-face' on how to check plain text (text without font)
+;; - See `wucuo-check-nil-font-face' on how to check plain text (text without font)
 ;;
 ;; - Use `wucuo-current-font-face' to detect font face at point
-;;
-;; - In `wucuo-flyspell-start-mode' is "normal", `wucuo-spell-check-buffer-max' specifies
-;;   the maximum size of buffer to check.
-;;   In `wucuo-flyspell-start-mode' is "fast", `wucuo-spell-check-region-max' specifies
-;;   the maximum size of visible region to check.
 ;;
 ;; - You can define a function in `wucuo-spell-check-buffer-predicate'.
 ;;   If the function returns t, the spell checking of current buffer will continue.
