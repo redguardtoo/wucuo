@@ -8,7 +8,7 @@
 Fastest solution to spell check camel case code or plain text
 
 - Fast
-- Works out of box
+- Spell check camel case code without any extra setup
 - Support both [[http://aspell.net/][Aspell]] and [[https://hunspell.github.io/][Hunspell]]
 - Powerful and easy to set up
 
@@ -38,15 +38,16 @@ Add below code into =~/.emacs= to enable =wucuo=,
 
 The spell checking starts when current buffer is saved.
 
+See =wucuo-check-nil-font-face= on how to check plain text (text without font).
+
 Please note Wucuo is a complete solution. You should turn off =flyspell-prog-mode= and =flyspell-mode= before using this program.
 
-Flyspell is a packages which Wucuo is based on. So the good news is *your configuration for flyspell still works*.
+Wucuo uses Flyspell API. So the good news is *your configuration for flyspell still works*.
 
-Flyspell provides two minor modes, =flyspell-prog-mode= and =flyspell-mode= which uses Flyspell API.
+Flyspell provides two minor modes, =flyspell-prog-mode= and =flyspell-mode=. They also use Flyspell API.
 
-This program replaces these two minor modes, using same Flyspell API.
+This program replaces these two minor modes.
 
-See =wucuo-check-nil-font-face= on how to check plain text (text without font).
 * Tips
 ** Configure Flyspell
 Flyspell configuration is shared by =flyspell-prog-mode=, =flyspell-mode=, and =wucuo=.
@@ -63,7 +64,7 @@ You could read my article [[https://blog.binchen.org/posts/what-s-the-best-spell
 Please install command line program Aspell and insert below code into =~/.emacs=,
 #+begin_src elisp
 (setq ispell-program-name "aspell")
-;; You could add extra option "--camel-case" for since Aspell 0.60.8 
+;; You could add extra option "--camel-case" for camel case code spell checking if Aspell 0.60.8+ is installed
 ;; @see https://github.com/redguardtoo/emacs.d/issues/796
 (setq ispell-extra-args '("--sug-mode=ultra" "--lang=en_US" "--run-together" "--run-together-limit=16"))
 #+end_src
