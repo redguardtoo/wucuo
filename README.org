@@ -20,6 +20,9 @@ Screenshot:
 
 * Install
 Wucuo is uploaded to [[http://melpa.org]]. The best way to install is Emacs package manager.
+
+If using [[https://guix.gnu.org/][GNU Guix]], Wucuo and its dependencies can be installed via =guix install emacs-guix=.
+
 * Setup
 Please install either Aspell or Hunspell and the dictionaries at first.
 
