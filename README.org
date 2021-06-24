@@ -1,7 +1,7 @@
 * wucuo
 [[file:wucuo.png]]
 
-[[https://travis-ci.org/redguardtoo/wucuo][https://travis-ci.org/redguardtoo/wucuo.svg?branch=master]]
+[[https://github.com/redguardtoo/wucuo/actions/workflows/test.yml][https://github.com/redguardtoo/wucuo/actions/workflows/test.yml/badge.svg]]
 [[http://melpa.org/#/wucuo][file:http://melpa.org/packages/wucuo-badge.svg]]
 [[http://stable.melpa.org/#/wucuo][file:http://stable.melpa.org/packages/wucuo-badge.svg]]
 
