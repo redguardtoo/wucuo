@@ -141,6 +141,8 @@ Hunspell, run =M-x wucuo-create-hunspell-personal-dictionary=. The plain text di
 Here is my [[https://gist.github.com/redguardtoo/8a232c0aad3b4d712bef1c2e910b8b33][~/.aspell.en.pws]].
 
 Hunspell's personal dictionary is same as aspell.
+
+Please note it's reported that [[https://github.com/redguardtoo/emacs.d/issues/947][the dictionary file should be utf-8 encoded]].
 ** Speed up checking if aspell is used
 #+begin_src elisp
 (setq ispell-extra-args "--run-together")

@@ -507,7 +507,7 @@ Returns t to continue checking, nil otherwise."
 
 ;;;###autoload
 (defun wucuo-create-aspell-personal-dictionary ()
-  "Create aspell personal dictionary."
+  "Create aspell personal dictionary which is utf-8 encoded plain text file."
   (interactive)
   (with-temp-buffer
     (let* ((file (file-truename (format "~/.aspell.%s.pws" wucuo-aspell-language-to-use))))
@@ -517,7 +517,7 @@ Returns t to continue checking, nil otherwise."
 
 ;;;###autoload
 (defun wucuo-create-hunspell-personal-dictionary ()
-  "Create hunspell personal dictionary."
+  "Create hunspell personal dictionary which is utf-8 encoded plain text file."
   (interactive)
   (with-temp-buffer
     (let* ((f (file-truename (format "~/.hunspell_%s" wucuo-hunspell-dictionary-base-name))))
