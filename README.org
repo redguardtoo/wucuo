@@ -28,7 +28,7 @@ Please install either Aspell or Hunspell and the dictionaries at first.
 
 This program does not mess up your Flyspell configuration. It assumes Flyspell is already configured properly.
 
-But if you get some problem on Flyspell configuration, check *sample configuration* in [[Tips]] section.
+But if you get some problem on Flyspell configuration, check *sample configuration* in "Tips" section.
 * Usage
 Add below code into =~/.emacs= to enable =wucuo=,
 #+begin_src elisp
@@ -59,7 +59,7 @@ This section is to help users who have problem to setup flyspell.
 
 You could read my article [[https://blog.binchen.org/posts/what-s-the-best-spell-check-set-up-in-emacs.html][What's the best spell check setup in emacs]] and [[https://emacs.stackexchange.com/questions/21378/spell-check-with-multiple-dictionaries/22240#22240][my stackexchange answers on flyspell]] to learn the Flyspell knowledge.
 
-*** aspell configuration sample
+*** Aspell configuration sample
 Please install command line program Aspell and insert below code into =~/.emacs=,
 #+begin_src elisp
 (setq ispell-program-name "aspell")
@@ -98,7 +98,7 @@ If =wucuo-flyspell-start-mode= is "normal", =wucuo-start= calls =flyspell-buffer
 
 The interval of buffer checking or region checking is controlled by =wucuo-update-interval=.
 
-Checking buffer or region only is more efficient than =flyspell-mode=.
+Wucuo only checks typo in current buffer or the visible region. So it's much faster than =flyspell-mode=.
 ** Skip spell checking under certain circumstances
 
 You can define a function in =wucuo-spell-check-buffer-predicate=. If the function returns t, the spell checking of current buffer will continue. If it returns nil, the spell checking is skipped.
@@ -125,22 +125,24 @@ See =wucuo-aspell-language-to-use= and =wucuo-hunspell-dictionary-base-name=
 (setq wucuo-personal-font-faces-to-check '(font-lock-comment-face))
 #+end_src
 ** Flyspell wrongly mark some word as typo
-There are three solutions.
-*** Emacs Lisp setup
-#+begin_src javascript
+There are two solutions.
+*** Solution 1, set up Emacs with below code,
+#+begin_src elisp
 (defun my-checker (word)
   "If WORD is typo, return t."
+  ;; add your own setup code here
   t)
 (setq wucuo-extra-predicate #'my-checker)
 #+end_src
-*** Create personal dictionary
-Aspell, run =M-x wucuo-create-aspell-personal-dictionary=. The plain text dictionary =~/.aspell.en.pws= is created if its option =--lang= is "en" ("en" is default value). 
+*** Solution 2, create a personal dictionary
+If you use Aspell, run =M-x wucuo-create-aspell-personal-dictionary= to create a plain text dictionary =~/.aspell.en.pws=.
+The "en" in ".aspell.en.pws" means the personal dictionary is an English dictionary. It's actually [[https://en.wikipedia.org/wiki/ISO_639-1][language code]] assigned to the English. Aspell's option  =--lang= uses same language code ("en" is default value). 
 
-Hunspell, run =M-x wucuo-create-hunspell-personal-dictionary=. The plain text dictionary =~/.hunspell_en_US= is created if its option =-d= contains "en_US".
+If you use Hunspell, run =M-x wucuo-create-hunspell-personal-dictionary= to create a plain text dictionary =~/.hunspell_en_US=. "en_US" is the language code used by Hunspell's option  =-d=.
 
 Here is my [[https://gist.github.com/redguardtoo/8a232c0aad3b4d712bef1c2e910b8b33][~/.aspell.en.pws]].
 
-Hunspell's personal dictionary is same as aspell.
+Hunspell's personal dictionary is in the same format as Aspell.
 
 Please note it's reported that [[https://github.com/redguardtoo/emacs.d/issues/947][the dictionary file should be utf-8 encoded]].
 ** Speed up checking if aspell is used
