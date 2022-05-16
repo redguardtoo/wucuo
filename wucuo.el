@@ -83,6 +83,8 @@
 ;;
 ;; To ignore specific typo, you can set `wucuo-extra-predicate'.
 ;;
+;; This program can be run in Linux terminal as batch script.
+;; See README for more details.
 
 ;;; Code:
 (require 'flyspell)

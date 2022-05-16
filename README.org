@@ -73,10 +73,13 @@ Please install command line program hunspell and insert below code into =~/.emac
 #+begin_src elisp
 (setq ispell-program-name "hunspell")
 ;; reset the hunspell so it STOPS querying locale!
-(setq ispell-local-dictionary "myhunspell") ; "myhunspell" is key to lookup in `ispell-local-dictionary-alist`
+;; "en_US" is the key to lookup in `ispell-local-dictionary-alist`
+(setq ispell-local-dictionary "en_US")
 ;; two dictionaries "en_US" and "zh_CN" are used. Feel free to remove "zh_CN"
+;; If `ispell-local-dictionary-alist' is nil, `ispell-local-dictionary' is passed
+;; to hunpsell cli program as dictionary.
 (setq ispell-local-dictionary-alist
-      '(("myhunspell" "[[:alpha:]]" "[^[:alpha:]]" "[']" nil ("-d" "en_US" "zh_CN") nil utf-8)))
+      '(("en_US" "[[:alpha:]]" "[^[:alpha:]]" "[']" nil ("-d" "en_US" "zh_CN") nil utf-8)))
 ;; new variable `ispell-hunspell-dictionary-alist' is defined in Emacs
 ;; If it's nil, Emacs tries to automatically set up the dictionaries.
 (when (boundp 'ispell-hunspell-dictionary-alist)
@@ -86,9 +89,16 @@ Please install command line program hunspell and insert below code into =~/.emac
 The function =wucuo-spell-check-file= will spell check one file and report typos.
 The function =wucuo-spell-check-directory= will spell check files under one directory and report typos.
 
-Above functions could be used through Emacs CLI (using Aspell),
+Above functions could be used through Emacs CLI.
+
+Example to use aspell to syntax check all files under current directory,
 #+begin_src elisp
-emacs -batch -Q -l ~/projs/wucuo/wucuo.el --eval '(let* ((ispell-program-name "aspell") (ispell-extra-args (wucuo-aspell-cli-args t))) (wucuo-spell-check-directory "."))'
+emacs -batch -Q -L ~/projs/wucuo -l ~/projs/wucuo/wucuo.el --eval '(let ((ispell-program-name "aspell") (ispell-extra-args (wucuo-aspell-cli-args t))) (wucuo-spell-check-directory "."))'
+#+end_src
+
+Example to use hunspell to syntax check one file,
+#+begin_src elisp
+emacs -batch -Q -L ~/projs/wucuo -l ~/projs/wucuo/wucuo.el --eval '(let ((ispell-program-name "hunspell") (ispell-local-dictionary "en_US")) (wucuo-spell-check-file "README.org"))'
 #+end_src
 ** Start mode
 The default value of =wucuo-flyspell-start-mode= is "fast".
