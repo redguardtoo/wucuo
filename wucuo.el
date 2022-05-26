@@ -113,8 +113,7 @@
   :group 'wucuo)
 
 (defcustom wucuo-enable-camel-case-algorithm-p t
-  "Enable slow algorithm for camel case word.
-If command line program has native support for camel case words, you could turn off the algorithm."
+  "Enable slower Lisp spell check algorithm for camel case word."
   :type 'boolean
   :group 'wucuo)
 
@@ -262,6 +261,10 @@ Returns t to continue checking, nil otherwise.")
 
 ;; Timer to run auto-update tags file
 (defvar wucuo-timer nil "Internal timer.")
+
+(declare-function markdown-flyspell-check-word-p "markdown-mode")
+(declare-function wucuo-flyspell-org-verify "wucuo-flyspell-org")
+(declare-function wucuo-flyspell-html-verify "wucuo-flyspell-html")
 
 ;;;###autoload
 (defun wucuo-register-extra-typo-detection-algorithms ()
@@ -477,9 +480,12 @@ Returns t to continue checking, nil otherwise."
 
      ;; should be right after per mode predicate
      ((and wucuo-enable-extra-typo-detection-algorithm-p
-           (or (and (wucuo-major-mode-html-p) (not (wucuo-flyspell-html-verify)))
-               (and (eq major-mode 'org-mode) (not (wucuo-flyspell-org-verify)))
-               (and (eq major-mode 'markdown-mode) (not (markdown-flyspell-check-word-p)))))
+           (or (and (wucuo-major-mode-html-p)
+                    (not (wucuo-flyspell-html-verify)))
+               (and (eq major-mode 'org-mode)
+                    (not (wucuo-flyspell-org-verify)))
+               (and (eq major-mode 'markdown-mode)
+                    (not (markdown-flyspell-check-word-p)))))
 
       (setq rlt nil))
 
@@ -658,7 +664,7 @@ If RUN-TOGETHER is t, aspell can check camel cased word."
 
 ;;;###autoload
 (defun wucuo-flyspell-highlight-incorrect-region-hack (orig-func &rest args)
-  "Don't mark doublon (double words) as typo.  ORIG-FUNC and ARGS is part of advice."
+  "Don't mark double words as typo.  ORIG-FUNC and ARGS is part of advice."
   (let* ((poss (nth 2 args)))
     (when (or wucuo-flyspell-check-doublon (not (eq 'doublon poss)))
       (apply orig-func args))))
@@ -795,8 +801,8 @@ spawns a single Ispell process and checks each word.  The default
 flyspell behavior is to highlight incorrect words.
 
 Remark:
-`wucuo-mode' uses `flyspell' and `flyspell-mode-map'.  Thus all Flyspell options and
-key bindings are valid."
+`wucuo-mode' uses `flyspell' and `flyspell-mode-map'.
+So all Flyspell setup and key bindings are valid."
   :lighter flyspell-mode-line-string
   :keymap flyspell-mode-map
   :group 'wucuo
