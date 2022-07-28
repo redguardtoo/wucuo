@@ -103,7 +103,7 @@
   :group 'wucuo)
 
 (defcustom wucuo-inherit-flyspell-mode-keybindings t
-  "Inherit 'flyspell-mode' keybindings."
+  "Inherit `flyspell-mode' keybindings."
   :type 'boolean
   :group 'wucuo)
 
@@ -132,8 +132,8 @@ region in current window."
 
 (defcustom wucuo-check-nil-font-face 'text
   "If nil, ignore plain text (text without font face).
-If it's 'text, check plain text in `text-mode' only.
-If it's 'prog, check plain text in `prog-mode' only.
+If it's \"text\", check plain text in `text-mode' only.
+If it's \"prog\", check plain text in `prog-mode' only.
 If it's t, check plain text in any mode."
   :type 'sexp
   :group 'wucuo)
@@ -288,7 +288,7 @@ If QUIET is t, font face is not output."
 ;;;###autoload
 (defun wucuo-split-camel-case (word)
   "Split camel case WORD into a list of strings.
-Ported from 'https://github.com/fatih/camelcase/blob/master/camelcase.go'."
+Ported from \"https://github.com/fatih/camelcase/blob/master/camelcase.go\"."
   (let* ((case-fold-search nil)
          (len (length word))
          ;; 64 sub-words is enough
@@ -771,7 +771,7 @@ If FULL-PATH-P is t, always show typo's file full path."
       (kill-emacs 1))))
 
 (defun wucuo-mode-on ()
-  "Turn Wucuo mode on.  Do not use this; use 'wucuo-mode' instead."
+  "Turn Wucuo mode on."
   (cond
    (flyspell-mode
     (message "Please turn off `flyspell-mode' and `flyspell-prog-mode' before wucuo starts!"))
@@ -780,7 +780,7 @@ If FULL-PATH-P is t, always show typo's file full path."
     (add-hook 'after-save-hook #'wucuo-spell-check-buffer nil t))))
 
 (defun wucuo-mode-off ()
-  "Turn Wucuo mode on.  Do not use this; use 'wucuo-mode' instead."
+  "Turn Wucuo mode on."
 
   ;; {{ copied from `flyspell-mode-off'
   (flyspell-delete-all-overlays)
