@@ -1,8 +1,8 @@
 ;;; wucuo.el --- Fastest solution to spell check camel case code or plain text -*- lexical-binding: t; -*-
 
-;; Copyright (C) 2018-2020 Chen Bin
+;; Copyright (C) 2018-2023 Chen Bin
 ;;
-;; Version: 0.2.9
+;; Version: 0.3.0
 ;; Keywords: convenience
 ;; Author: Chen Bin <chenbin DOT sh AT gmail DOT com>
 ;; URL: http://github.com/redguardtoo/wucuo
@@ -59,6 +59,9 @@
 ;; - See `wucuo-check-nil-font-face' on how to check plain text (text without font)
 ;;
 ;; - Use `wucuo-current-font-face' to detect font face at point
+;;
+;; - Set `wucuo-font-faces-to-check' or `wucuo-personal-font-faces-to-check' to specify
+;; font faces to spell check
 ;;
 ;; - You can define a function in `wucuo-spell-check-buffer-predicate'.
 ;;   If the function returns t, the spell checking of current buffer will continue.
@@ -161,6 +164,20 @@ User's original dictionary configuration for flyspell still works."
     font-lock-function-name-face
     font-lock-variable-name-face
     ;; font-lock-type-face ; names of user-defined data types
+
+    ;; tree-sitter
+    tree-sitter-hl-face:type
+    tree-sitter-hl-face:string
+    tree-sitter-hl-face:string.special
+    tree-sitter-hl-face:doc
+    tree-sitter-hl-face:comment
+    tree-sitter-hl-face:property
+    tree-sitter-hl-face:variable
+    tree-sitter-hl-face:varialbe.parameter
+    tree-sitter-hl-face:function
+    tree-sitter-hl-face:function.call
+    tree-sitter-hl-face:method
+    tree-sitter-hl-face:method.call
 
     ;; javascript
     js2-function-call
@@ -536,7 +553,7 @@ Returns t to continue checking, nil otherwise."
 ;;;###autoload
 (defun wucuo-version ()
   "Output version."
-  (message "0.2.9"))
+  (message "0.3.0"))
 
 ;;;###autoload
 (defun wucuo-spell-check-visible-region ()
