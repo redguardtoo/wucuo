@@ -2,7 +2,7 @@
 
 ;; Copyright (C) 2018-2023 Chen Bin
 ;;
-;; Version: 0.3.0
+;; Version: 0.3.1
 ;; Keywords: convenience
 ;; Author: Chen Bin <chenbin DOT sh AT gmail DOT com>
 ;; URL: http://github.com/redguardtoo/wucuo
@@ -309,10 +309,10 @@ Ported from \"https://github.com/fatih/camelcase/blob/master/camelcase.go\"."
   (let* ((case-fold-search nil)
          (len (length word))
          ;; 64 sub-words is enough
-         (runes [nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil
+         (runes (vector nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil
                  nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil
                  nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil
-                 nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil])
+                 nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil))
          (runes-length 0)
          (i 0)
          ch
@@ -553,7 +553,7 @@ Returns t to continue checking, nil otherwise."
 ;;;###autoload
 (defun wucuo-version ()
   "Output version."
-  (message "0.3.0"))
+  (message "0.3.1"))
 
 ;;;###autoload
 (defun wucuo-spell-check-visible-region ()

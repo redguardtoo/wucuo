@@ -1,6 +1,6 @@
 #!/bin/bash
 name=wucuo
-version=0.3.0
+version=0.3.1
 pkg=$name-$version
 mkdir $pkg
 cp *.el $pkg
