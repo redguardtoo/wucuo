@@ -154,7 +154,7 @@ The "en" in ".aspell.en.pws" means the personal dictionary is an English diction
 
 If you use Hunspell, run =M-x wucuo-create-hunspell-personal-dictionary= to create a plain text dictionary =~/.hunspell_en_US=. "en_US" is the language code used by Hunspell's option  =-d=.
 
-Here is my[[file:.aspell.en.pws]].
+Here is my [[file:.aspell.en.pws]].
 
 Hunspell's personal dictionary is in the same format as Aspell.
 
