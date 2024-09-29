@@ -2,7 +2,7 @@
 
 ;; Copyright (C) 2018-2023 Chen Bin
 ;;
-;; Version: 0.3.1
+;; Version: 0.3.2
 ;; Keywords: convenience
 ;; Author: Chen Bin <chenbin DOT sh AT gmail DOT com>
 ;; URL: http://github.com/redguardtoo/wucuo
@@ -553,14 +553,14 @@ Returns t to continue checking, nil otherwise."
 ;;;###autoload
 (defun wucuo-version ()
   "Output version."
-  (message "0.3.1"))
+  (message "0.3.2"))
 
 ;;;###autoload
 (defun wucuo-spell-check-visible-region ()
   "Spell check visible region in current buffer."
   (interactive)
-  (let* ((beg (window-start))
-         (end (window-end)))
+  (let* ((beg (max (point-min) (window-start)))
+         (end (min (point-max) (window-end))))
     (when (< (- end beg) wucuo-spell-check-region-max)
       (if wucuo-debug (message "wucuo-spell-check-visible-region called from %s to %s; major-mode=%s" beg end major-mode))
       ;; See https://emacs-china.org/t/flyspell-mode-wucuo-0-2-0/13274/46
