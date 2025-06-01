@@ -58,7 +58,7 @@ If your existing Flyspell configuration already works, you don't need read this 
 
 This section is to help users who have problem to setup flyspell.
 
-You could read my article [[https://blog.binchen.org/posts/what-s-the-best-spell-check-set-up-in-emacs.html][What's the best spell check setup in emacs]] and [[https://emacs.stackexchange.com/questions/21378/spell-check-with-multiple-dictionaries/22240#22240][my stackexchange answers on flyspell]] to learn the Flyspell knowledge.
+You could read my article [[https://redguardtoo.github.io//posts/what-s-the-best-spell-check-set-up-in-emacs.html][What's the best spell check setup in emacs]] and [[https://emacs.stackexchange.com/questions/21378/spell-check-with-multiple-dictionaries/22240#22240][my stackexchange answers on flyspell]] to learn the Flyspell knowledge.
 
 *** Aspell configuration sample
 Please install command line program Aspell and insert below code into =~/.emacs=,
